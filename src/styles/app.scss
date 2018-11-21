@@ -14,6 +14,9 @@
     }
   }
   .products{
+    .back {
+      margin: 1.3rem 0;
+    }
     .links {
       margin: 1rem 0;
       .link {
@@ -57,9 +60,6 @@
     .product{
       padding:1rem;
       display: inline-block;
-      .back {
-        margin: 1.3rem 0;
-      }
       .img{
         width: 100%;
         max-width: 400px;
@@ -82,6 +82,15 @@
       }
       .comments-title {
         margin:1rem 0;
+      }
+      .new-comment {
+        color: #000;
+        text-decoration: none;
+        display: block;
+        padding: .8rem .5rem;
+        width: 100%;
+        border:none;
+        border-bottom:1px solid #ccc;
       }
       .comments {
           border-top: 1px solid #ccc;

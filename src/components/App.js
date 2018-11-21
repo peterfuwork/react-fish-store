@@ -15,7 +15,9 @@ class App extends Component {
       newProductPrice: 0,
       newProductType: "",
       newProductDesc: "",
-      newProductImageLink: ""
+      newProductImageLink: "",
+      messages:[],
+      newMessage:""
     }
   }
 
@@ -47,10 +49,47 @@ class App extends Component {
     })
     .then(response => response.json())
     .then((response) => {
-      console.log('response',response)
       this.setState({
         fish: [...this.state.fish, response]
       })
+    })
+  }
+  
+  postMsg = async (id, message) => {
+    var newBody = {
+      id,
+      message
+    };
+    console.log('newBody', newBody.id)
+    await fetch('http://localhost:3001/messagePOST/', {
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+      },
+      method: "POST",
+      body: JSON.stringify(newBody)
+    })
+    .then(response => response.json())
+    .then((response) => {
+      console.log('response',response)
+      // const singleFish = this.state.fish[id-1].messages
+      // console.log('singleFish',singleFish);
+      this.setState({
+        fish: [
+          ...this.state.fish.slice(0, id-1), 
+          { 
+            id: this.state.fish[id-1].id,
+            name: this.state.fish[id-1].name,
+            price: this.state.fish[id-1].price,
+            desc: this.state.fish[id-1].desc,
+            type: this.state.fish[id-1].type,
+            image: this.state.fish[id-1].image,
+            messages: this.state.fish[id-1].messages.concat(response)
+          }, 
+          ...this.state.fish.slice(id)
+        ]
+      })
+      console.log('fish',this.state.fish);
     })
   }
 
@@ -98,6 +137,23 @@ class App extends Component {
     })
   }
 
+  onChangeMessage = (e) => {
+    this.setState({
+      newMessage: e.target.value
+    });
+  }
+  onHandleNewMessage = (e, fishId) => {
+    e.preventDefault();
+    console.log('fishId',fishId)
+    const message = { text: this.state.newMessage };
+    console.log('message', message)
+    this.postMsg(fishId, message);
+
+    this.setState({
+      newMessage: ""
+    })
+  }
+
   render() { 
     return (
       <BrowserRouter>
@@ -126,9 +182,12 @@ class App extends Component {
               <Route
                 exact
                 path="/marinefish/id/:id"
-                component={(props) =>
+                render={(props) =>
                   <Single 
                     fish={this.state.fish}
+                    onHandleNewMessage={this.onHandleNewMessage}
+                    onChangeMessage={this.onChangeMessage}
+                    newMessage={this.state.newMessage}
                     {...props}
                   />
                 }
