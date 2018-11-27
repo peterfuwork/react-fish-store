@@ -11,21 +11,24 @@ class App extends Component {
 
     this.state = {
       fish: [],
+      comments: {},
       newProductName: "",
       newProductPrice: 0,
       newProductType: "",
       newProductDesc: "",
       newProductImageLink: "",
-      messages:[],
-      newMessage:""
+      newComment:""
     }
   }
 
   async componentDidMount() {
     const data = await fetch('http://localhost:3001/fish/')
     .then(data => data.json());
+    const msgData = await fetch('http://localhost:3001/comments/')
+    .then(data => data.json())
     this.setState({
-      fish: data.fish
+      fish: data.fish,
+      comments: msgData.comments
     })
   }
 
@@ -55,12 +58,13 @@ class App extends Component {
     })
   }
   
-  postMsg = async (id, message) => {
+  postMsg = async (code, comment, postLength) => {
     var newBody = {
-      id,
-      message
+      code,
+      comment,
+      postLength
     };
-    console.log('newBody', newBody.id)
+    console.log('newBody', newBody.code)
     await fetch('http://localhost:3001/messagePOST/', {
       headers: {
         'Content-Type': 'application/json',
@@ -69,27 +73,20 @@ class App extends Component {
       method: "POST",
       body: JSON.stringify(newBody)
     })
-    .then(response => response.json())
+    .then(response => {
+      return response.json();
+    })
     .then((response) => {
       console.log('response',response)
-      // const singleFish = this.state.fish[id-1].messages
-      // console.log('singleFish',singleFish);
-      this.setState({
-        fish: [
-          ...this.state.fish.slice(0, id-1), 
-          { 
-            id: this.state.fish[id-1].id,
-            name: this.state.fish[id-1].name,
-            price: this.state.fish[id-1].price,
-            desc: this.state.fish[id-1].desc,
-            type: this.state.fish[id-1].type,
-            image: this.state.fish[id-1].image,
-            messages: this.state.fish[id-1].messages.concat(response)
-          }, 
-          ...this.state.fish.slice(id)
-        ]
-      })
-      console.log('fish',this.state.fish);
+      
+      console.log('code',code)
+      this.setState( prevState => ({
+          comments: {
+            ...prevState.comments,
+            [code]: response
+          }
+        })
+      )
     })
   }
 
@@ -126,6 +123,7 @@ class App extends Component {
     const type = this.state.newProductType;
     const desc = this.state.newProductDesc;
     const image = this.state.newProductImageLink;
+    console.log('e',e);
 
     this.post(name, price, type, desc, image);
     this.setState({
@@ -137,24 +135,28 @@ class App extends Component {
     })
   }
 
-  onChangeMessage = (e) => {
+  onChangeComment = (e) => {
     this.setState({
-      newMessage: e.target.value
+      newComment: e.target.value
     });
   }
-  onHandleNewMessage = (e, fishId) => {
+  onHandleNewComment = (e, postCode, specificPostCommentLength) => {
     e.preventDefault();
-    console.log('fishId',fishId)
-    const message = { text: this.state.newMessage };
-    console.log('message', message)
-    this.postMsg(fishId, message);
+    console.log('postCode',postCode)
+    const comment = { 
+      text: this.state.newComment,
+      user: ""
+    };
+    console.log('comment', comment)
+    this.postMsg(postCode, comment, specificPostCommentLength);
 
     this.setState({
-      newMessage: ""
+      newComment: ""
     })
   }
 
-  render() { 
+  render() {
+    console.log('comments',this.state.comments)
     return (
       <BrowserRouter>
         <div className="App">
@@ -166,6 +168,7 @@ class App extends Component {
                 component={() => 
                   <Category 
                     fish={this.state.fish}
+                    comments={this.state.comments}
                   />
                 }
               />
@@ -185,9 +188,10 @@ class App extends Component {
                 render={(props) =>
                   <Single 
                     fish={this.state.fish}
-                    onHandleNewMessage={this.onHandleNewMessage}
-                    onChangeMessage={this.onChangeMessage}
-                    newMessage={this.state.newMessage}
+                    comments={this.state.comments}
+                    onHandleNewComment={this.onHandleNewComment}
+                    onChangeComment={this.onChangeComment}
+                    newComment={this.state.newComment}
                     {...props}
                   />
                 }
@@ -207,6 +211,7 @@ class App extends Component {
                     newProductDesc={this.state.newProductDesc}
                     newProductImageLink={this.state.newProductImageLink}
                     onHandleSubmit={this.onHandleSubmit}
+                    {...props}
                   />
                 }
               />

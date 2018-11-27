@@ -24,9 +24,7 @@ const Filtered = (props) => {
                 id={singleFish.id}
                 image={singleFish.image}
                 name={singleFish.name}
-                desc={singleFish.desc}
                 price={singleFish.price}
-                messages={singleFish.messages}
             />
         );
     })

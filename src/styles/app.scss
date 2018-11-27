@@ -37,12 +37,13 @@
       h4 {
         margin:1.5rem 0;
       }
-      input {
+      input, textarea {
         font-size:1.7rem;
         padding:1rem;
         margin:1rem 0;
         width: 100%;
         max-width: 600px;
+        border:1px solid #ccc;
       }
       .submit {
         border:1px solid #000;
@@ -71,7 +72,6 @@
       }
       .desc{
         line-height:1.5;
-        height: 40vh;
         @media(max-width:767px) {
           height: initial;
         }
@@ -101,6 +101,12 @@
           text-decoration: none;
           display: block;
           padding: .8rem .5rem;
+          line-height: 1.5;
+          word-wrap: break-word;
+          .user {
+            font-weight:bold;
+            color:brown;
+          }
         }
         &:last-child {
           border-bottom: 1px solid #ccc;

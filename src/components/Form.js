@@ -2,6 +2,7 @@ import React from 'react';
 import Back from './Back';
 
 const Form = (props) => {
+    //console.log(props)
     return (
         <form className="col-sm-12 form" onSubmit={(e) => props.onHandleSubmit(e)}>
             <h4>Add a new fish product</h4>
@@ -20,7 +21,9 @@ const Form = (props) => {
                 type="text"
                 onChange={(e) => props.onChangeType(e)}
                 value={props.newProductType} /><br />
-            <textarea 
+            <textarea
+                cols="50"
+                rows="4"
                 placeholder="desc" 
                 type="textarea"
                 onChange={(e) => props.onChangeDesc(e)}

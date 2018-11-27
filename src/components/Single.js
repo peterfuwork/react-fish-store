@@ -3,22 +3,33 @@ import Back from './Back';
 
 const Single = (props) => {
     //console.log('single',props)
-    if(props.fish.length === 0) {
+    //console.log('comments',props.comments)
+
+    if(props.fish.length === 0 || props.comments.length === 0) {
         return (
             <div>
                 loading...
             </div>
         );
     }
+
+
     const singleFish = props.fish.filter(single => single.id === Number.parseInt(props.match.params.id));
-    console.log('singleFish',singleFish)
-    const comments = singleFish[0].messages.map((comment, i) => {
-        if(i === -1) {
+    console.log('singleFish',singleFish[0].code)
+
+    const arrOfOnePostComments = props.comments[singleFish[0].code] || [];
+
+    console.log('arrOfOnePostComments', arrOfOnePostComments);
+
+    const comments = arrOfOnePostComments.map((comment, i) => {
+        console.log('comment',comment);
+        console.log('i',i)
+        if(i < -1 || undefined) {
             return <div key={i}>&nbsp;</div>
         } else {
             return (
                 <div className="comments" key={i}>
-                    <a href="#" className="comment">X&nbsp;<span className="text">{ comment.text }</span></a>
+                    <a href="#" className="comment">X&nbsp;<span className="user">{ comment.user }</span>:&nbsp;<span className="text">{ comment.text }</span></a>
                 </div>
             )
         }
@@ -34,13 +45,13 @@ const Single = (props) => {
                 <div className="price">${singleFish[0].price}</div>
                 <h5 className="comments-title">Customer Review</h5>
                 <div>{ comments }</div>
-                <form onSubmit={(e) => props.onHandleNewMessage(e, singleFish[0].id, singleFish[0].messages)}>
+                <form onSubmit={(e) => props.onHandleNewComment(e, singleFish[0].code, arrOfOnePostComments.length)}>
                     <input 
                         className="new-comment" 
                         type="text" 
                         placeholder="leave a message..."
-                        value={props.newMessage}
-                        onChange={props.onChangeMessage} />
+                        value={props.newComment}
+                        onChange={props.onChangeComment} />
                 </form>
             </div>
         </div>

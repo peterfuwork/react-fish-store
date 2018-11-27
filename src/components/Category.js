@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 
 const Category = (props) => {
     // console.log('category',props.fish)
+    
     if(props.fish.length === 0) {
         return (
             <div>
@@ -18,9 +19,7 @@ const Category = (props) => {
                 id={singleFish.id}
                 image={singleFish.image}
                 name={singleFish.name}
-                desc={singleFish.desc}
                 price={singleFish.price}
-                messages={singleFish.messages}
             />
         );
     });
