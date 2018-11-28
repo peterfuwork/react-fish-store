@@ -38,11 +38,13 @@ class Single extends Component {
                         <span className={`text ${this.props.isEditButtonClick && this.props.editMsgCid === comment.cid ? "" : "show"}`}>{ comment.text }</span>
                         <a 
                             className={`edit-btn ${this.props.isEditButtonClick && this.props.editMsgCid === comment.cid ? "" : "show"}`}
-                            onClick={() => this.props.onClickEdit(comment.text, comment.cid)}>(edit)</a>
+                            onClick={() => this.props.onClickEdit(comment.text, comment.cid)}>&nbsp;(edit)</a>
                         <div className={`edit-hidden ${this.props.isEditButtonClick && this.props.editMsgCid === comment.cid ? "show" : ""}`}>
-                            <input
-                                className="update-input"
-                                onChange={(e) => this.props.onUpdateInputComment(e)}
+                            <textarea
+                                rows="3" 
+                                cols="25"
+                                className="update-textarea"
+                                onChange={(e) => this.props.onUpdateTextareaComment(e)}
                                 onKeyPress={(e) => this.handleKeyPress(e, singleFish[0].code, comment.cid, this.props.editMsg, comment.user, i)}
                                 value={this.props.editMsg}/>
                             <a 

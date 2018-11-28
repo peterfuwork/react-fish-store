@@ -226,7 +226,7 @@ class App extends Component {
     })
   }
 
-  onUpdateInputComment = (e) => {
+  onUpdateTextareaComment = (e) => {
     e.preventDefault();
     // console.log('postCode', postCode)
     // console.log('cid', cid)
@@ -294,7 +294,7 @@ class App extends Component {
                     onChangeComment={this.onChangeComment}
                     newComment={this.state.newComment}
                     onClickEdit={this.onClickEdit}
-                    onUpdateInputComment={this.onUpdateInputComment}
+                    onUpdateTextareaComment={this.onUpdateTextareaComment}
                     onSaveComment={this.onSaveComment}
                     onDeleteComment={this.onDeleteComment}
                     isEditButtonClick={this.state.isEditButtonClick}

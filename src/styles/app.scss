@@ -82,6 +82,9 @@
       }
       .comments-title {
         margin:1rem 0;
+        @media(max-width:767px) {
+          text-align:left;
+        }
       }
       .new-comment {
         color: #000;
@@ -103,6 +106,9 @@
           padding: .8rem .5rem;
           line-height: 1.5;
           word-wrap: break-word;
+          @media(max-width:767px) {
+            text-align:left;
+          }
           .delete-btn {
             cursor:pointer;
             &:hover {
@@ -126,7 +132,6 @@
             }
             cursor:pointer;
             font-size: .7rem;
-            margin:0 .7rem;
             &:hover {
               color:rgb(255, 0, 0);
             }
@@ -136,15 +141,18 @@
             &.show {
               display:block;
             }
-            .update-input {
+            .update-textarea {
               padding: .4rem;
               border: 0;
-              border-bottom: 1px solid #ccc;
+              border: 1px solid #ccc;
+              @media(max-width:767px) {
+                width:100%;
+              }
             }
             .save-btn {
               cursor:pointer;
               font-size: .7rem;
-              margin:0 .7rem;
+              margin:0 .5rem;
               &:hover {
                 color:rgb(255, 0, 0);
               }
