@@ -27,7 +27,7 @@ const Filtered = (props) => {
                 price={singleFish.price}
             />
         );
-    })
+    });
     
     return (
         <div>

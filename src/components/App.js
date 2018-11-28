@@ -17,7 +17,10 @@ class App extends Component {
       newProductType: "",
       newProductDesc: "",
       newProductImageLink: "",
-      newComment:""
+      newComment:"",
+      isEditButtonClick: false,
+      editMsg: "",
+      editMsgCid: ""
     }
   }
 
@@ -90,6 +93,65 @@ class App extends Component {
     })
   }
 
+  updateMsg = async (code, cid, text, user, arrIndex) => {
+    var newBody = {
+      code,
+      cid,
+      text,
+      user,
+      arrIndex
+    };
+    await fetch('http://localhost:3001/messagePUT/', {
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+      },
+      method: "PUT",
+      body: JSON.stringify(newBody)
+    })
+    .then(response => {
+      return response.json();
+    })
+    .then((response) => {
+      this.setState(prevState => ({
+          comments: {
+            ...prevState.comments,
+            [code]: response
+          }
+        })
+      )
+      console.log('response',response)
+    })
+  }
+
+  deleteMsg = async (code, cid) => {
+    var newBody = {
+      code,
+      cid
+    };
+    await fetch('http://localhost:3001/messageDELETE/', {
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+      },
+      method: "DELETE",
+      body: JSON.stringify(newBody)
+    })
+    .then(response => {
+      return response.json();
+    })
+    .then((response) => {
+      this.setState(prevState => ({
+          comments: {
+            ...prevState.comments,
+            [code]: response
+          }
+        })
+      )
+      console.log('response',response)
+    })
+  }
+
   onChangeName = (e) => {
     this.setState({
       newProductName: e.target.value
@@ -140,6 +202,7 @@ class App extends Component {
       newComment: e.target.value
     });
   }
+
   onHandleNewComment = (e, postCode, specificPostCommentLength) => {
     e.preventDefault();
     console.log('postCode',postCode)
@@ -153,6 +216,44 @@ class App extends Component {
     this.setState({
       newComment: ""
     })
+  }
+
+  onClickEdit = (text, cid) => {
+    this.setState({
+      isEditButtonClick: true,
+      editMsgCid: cid,
+      editMsg: text
+    })
+  }
+
+  onUpdateInputComment = (e) => {
+    e.preventDefault();
+    // console.log('postCode', postCode)
+    // console.log('cid', cid)
+    // console.log('text', text)
+    // console.log('user', user)
+    // console.log('i', arrIndex)
+    
+    this.setState({
+      editMsg: e.target.value
+    })
+  }
+
+  onSaveComment = (e, postCode, cid, newText, user, arrIndex) => {
+    e.preventDefault();
+    // console.log('postCode', postCode)
+    // console.log('cid', cid)
+    // console.log('text', text)
+    this.updateMsg(postCode, cid, newText, user, arrIndex);
+    this.setState({
+      isEditButtonClick: false
+    })
+    // this.updateMsg(postCode, cid);
+  }
+
+  onDeleteComment = (e, postCode, cid) => {
+    e.preventDefault();
+    this.deleteMsg(postCode, cid);
   }
 
   render() {
@@ -192,6 +293,13 @@ class App extends Component {
                     onHandleNewComment={this.onHandleNewComment}
                     onChangeComment={this.onChangeComment}
                     newComment={this.state.newComment}
+                    onClickEdit={this.onClickEdit}
+                    onUpdateInputComment={this.onUpdateInputComment}
+                    onSaveComment={this.onSaveComment}
+                    onDeleteComment={this.onDeleteComment}
+                    isEditButtonClick={this.state.isEditButtonClick}
+                    editMsg={this.state.editMsg}
+                    editMsgCid={this.state.editMsgCid}
                     {...props}
                   />
                 }

@@ -103,9 +103,52 @@
           padding: .8rem .5rem;
           line-height: 1.5;
           word-wrap: break-word;
+          .delete-btn {
+            cursor:pointer;
+            &:hover {
+              color:rgb(255, 0, 0);
+            }
+          }
           .user {
             font-weight:bold;
             color:brown;
+          }
+          .text {
+            display:none;
+            &.show {
+              display:inline-block;
+            }
+          }
+          .edit-btn {
+            display:none;
+            &.show {
+              display:inline-block;
+            }
+            cursor:pointer;
+            font-size: .7rem;
+            margin:0 .7rem;
+            &:hover {
+              color:rgb(255, 0, 0);
+            }
+          }
+          .edit-hidden {
+            display:none;
+            &.show {
+              display:block;
+            }
+            .update-input {
+              padding: .4rem;
+              border: 0;
+              border-bottom: 1px solid #ccc;
+            }
+            .save-btn {
+              cursor:pointer;
+              font-size: .7rem;
+              margin:0 .7rem;
+              &:hover {
+                color:rgb(255, 0, 0);
+              }
+            }
           }
         }
         &:last-child {
