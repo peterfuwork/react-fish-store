@@ -11,6 +11,7 @@ class App extends Component {
 
     this.state = {
       fish: [],
+      filteredfish: [],
       comments: {},
       newProductName: "",
       newProductPrice: 0,
@@ -31,6 +32,7 @@ class App extends Component {
     .then(data => data.json())
     this.setState({
       fish: data.fish,
+      filteredfish: data.fish,
       comments: msgData.comments
     })
   }
@@ -152,6 +154,19 @@ class App extends Component {
     })
   }
 
+  onClickFilter = (e) => {
+    if (e.target.value === "all") {
+      this.setState({
+        filteredfish: this.state.fish
+      });
+    } else {
+      const filtered = this.state.fish.filter(singleFish => singleFish.type === e.target.value);
+      this.setState({
+        filteredfish: filtered
+      });
+    }
+  }
+
   onChangeName = (e) => {
     this.setState({
       newProductName: e.target.value
@@ -269,7 +284,9 @@ class App extends Component {
                 component={() => 
                   <Category 
                     fish={this.state.fish}
+                    filteredfish={this.state.filteredfish}
                     comments={this.state.comments}
+                    onClickFilter={this.onClickFilter}
                   />
                 }
               />

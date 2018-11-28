@@ -31,6 +31,33 @@
           background-color:#000;
         }
       }
+      .filtered-fish-panel {
+        float: right;
+        padding: 1rem;
+        border: 1px solid #000;
+        font-size: 1.2rem;
+        margin: 0 1rem 1rem;
+        text-align: left;
+        @media(max-width:767px) {
+          float: initial;
+        }
+        input {
+          cursor:pointer;
+          display:inline-block;
+          margin: .4rem .3rem;
+        }
+        .filtered-btn {
+          border: 1px solid #000;
+          padding: .3rem;
+          margin: .2rem 0;
+          width: 100%;
+          text-align: left;
+          &:hover {
+            color:#fff;
+            background-color:#000;
+          }
+        }
+      }
     }
     .form{
       text-align:center;
