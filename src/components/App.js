@@ -11,7 +11,7 @@ class App extends Component {
 
     this.state = {
       fish: [],
-      filteredfish: [],
+      filteredFish: [],
       comments: {},
       newProductName: "",
       newProductPrice: 0,
@@ -21,7 +21,10 @@ class App extends Component {
       newComment:"",
       isEditButtonClick: false,
       editMsg: "",
-      editMsgCid: ""
+      editMsgCid: "",
+
+      currentPage: 1,
+      fishPerPage: 6
     }
   }
 
@@ -32,12 +35,10 @@ class App extends Component {
     .then(data => data.json())
     this.setState({
       fish: data.fish,
-      filteredfish: data.fish,
+      filteredFish: data.fish,
       comments: msgData.comments
     })
   }
-
-  
 
   post = async (name, price, type, desc, image) => {
     const newBody = {
@@ -58,7 +59,8 @@ class App extends Component {
     .then(response => response.json())
     .then((response) => {
       this.setState({
-        fish: [...this.state.fish, response]
+        fish: [...this.state.fish, response],
+        filteredFish: [...this.state.fish, response]
       })
     })
   }
@@ -157,12 +159,12 @@ class App extends Component {
   onClickFilter = (e) => {
     if (e.target.value === "all") {
       this.setState({
-        filteredfish: this.state.fish
+        filteredFish: this.state.fish
       });
     } else {
       const filtered = this.state.fish.filter(singleFish => singleFish.type === e.target.value);
       this.setState({
-        filteredfish: filtered
+        filteredFish: filtered
       });
     }
   }
@@ -243,12 +245,6 @@ class App extends Component {
 
   onUpdateTextareaComment = (e) => {
     e.preventDefault();
-    // console.log('postCode', postCode)
-    // console.log('cid', cid)
-    // console.log('text', text)
-    // console.log('user', user)
-    // console.log('i', arrIndex)
-    
     this.setState({
       editMsg: e.target.value
     })
@@ -256,9 +252,6 @@ class App extends Component {
 
   onSaveComment = (e, postCode, cid, newText, user, arrIndex) => {
     e.preventDefault();
-    // console.log('postCode', postCode)
-    // console.log('cid', cid)
-    // console.log('text', text)
     this.updateMsg(postCode, cid, newText, user, arrIndex);
     this.setState({
       isEditButtonClick: false
@@ -271,79 +264,89 @@ class App extends Component {
     this.deleteMsg(postCode, cid);
   }
 
+  onHandleClickPage = (e) => {
+    this.setState({
+        currentPage: Number(e.target.id)
+    });
+  }
+
   render() {
     console.log('comments',this.state.comments)
     return (
       <BrowserRouter>
-        <div className="App">
-          <div className="container">
-            <section className="row products">
-              <Route 
-                exact 
-                path="/" 
-                component={() => 
-                  <Category 
-                    fish={this.state.fish}
-                    filteredfish={this.state.filteredfish}
-                    comments={this.state.comments}
-                    onClickFilter={this.onClickFilter}
-                  />
-                }
-              />
-              <Route 
-                exact 
-                path="/marinefish/type/:type"
-                component={(props) => 
-                  <Filtered 
-                    fish={this.state.fish}
-                    {...props}
-                  />
-                }
-              />
-              <Route
-                exact
-                path="/marinefish/id/:id"
-                render={(props) =>
-                  <Single 
-                    fish={this.state.fish}
-                    comments={this.state.comments}
-                    onHandleNewComment={this.onHandleNewComment}
-                    onChangeComment={this.onChangeComment}
-                    newComment={this.state.newComment}
-                    onClickEdit={this.onClickEdit}
-                    onUpdateTextareaComment={this.onUpdateTextareaComment}
-                    onSaveComment={this.onSaveComment}
-                    onDeleteComment={this.onDeleteComment}
-                    isEditButtonClick={this.state.isEditButtonClick}
-                    editMsg={this.state.editMsg}
-                    editMsgCid={this.state.editMsgCid}
-                    {...props}
-                  />
-                }
-              />
-              <Route exact 
-                path="/form"
-                render={(props) =>
-                  <Form
-                    onChangeName={this.onChangeName}
-                    onChangePrice={this.onChangePrice}
-                    onChangeType={this.onChangeType}
-                    onChangeDesc={this.onChangeDesc}
-                    onChangeImage={this.onChangeImage}
-                    newProductName={this.state.newProductName}
-                    newProductPrice={this.state.newProductPrice}
-                    newProductType={this.state.newProductType}
-                    newProductDesc={this.state.newProductDesc}
-                    newProductImageLink={this.state.newProductImageLink}
-                    onHandleSubmit={this.onHandleSubmit}
-                    {...props}
-                  />
-                }
-              />
-              
-            </section>
+            <div className="App">
+            <div className="container">
+              <section className="row products">
+                <Route 
+                  exact 
+                  path="/" 
+                  component={() => 
+                    <Category 
+                      fish={this.state.fish}
+                      filteredFish={this.state.filteredFish}
+                      comments={this.state.comments}
+                      onClickFilter={this.onClickFilter}
+
+                      onHandleClickPage={this.onHandleClickPage}
+                      currentPage={this.state.currentPage}
+                      fishPerPage={this.state.fishPerPage}
+                    />
+                  }
+                />
+                <Route 
+                  exact 
+                  path="/marinefish/type/:type"
+                  component={(props) => 
+                    <Filtered 
+                      fish={this.state.fish}
+                      {...props}
+                    />
+                  }
+                />
+                <Route
+                  exact
+                  path="/marinefish/id/:id"
+                  render={(props) =>
+                    <Single 
+                      fish={this.state.fish}
+                      comments={this.state.comments}
+                      onHandleNewComment={this.onHandleNewComment}
+                      onChangeComment={this.onChangeComment}
+                      newComment={this.state.newComment}
+                      onClickEdit={this.onClickEdit}
+                      onUpdateTextareaComment={this.onUpdateTextareaComment}
+                      onSaveComment={this.onSaveComment}
+                      onDeleteComment={this.onDeleteComment}
+                      isEditButtonClick={this.state.isEditButtonClick}
+                      editMsg={this.state.editMsg}
+                      editMsgCid={this.state.editMsgCid}
+                      {...props}
+                    />
+                  }
+                />
+                <Route exact 
+                  path="/form"
+                  render={(props) =>
+                    <Form
+                      onChangeName={this.onChangeName}
+                      onChangePrice={this.onChangePrice}
+                      onChangeType={this.onChangeType}
+                      onChangeDesc={this.onChangeDesc}
+                      onChangeImage={this.onChangeImage}
+                      newProductName={this.state.newProductName}
+                      newProductPrice={this.state.newProductPrice}
+                      newProductType={this.state.newProductType}
+                      newProductDesc={this.state.newProductDesc}
+                      newProductImageLink={this.state.newProductImageLink}
+                      onHandleSubmit={this.onHandleSubmit}
+                      {...props}
+                    />
+                  }
+                />
+                
+              </section>
+            </div>
           </div>
-        </div>
       </BrowserRouter>
     );
   }

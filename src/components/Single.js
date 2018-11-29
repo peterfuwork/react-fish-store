@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Back from './Back';
+import ScrollToTopOnMount from './ScrollToTopOnMount';
 
 class Single extends Component {
     handleKeyPress = (e, code, cid, text, user, i) => {
@@ -59,13 +60,14 @@ class Single extends Component {
     // console.log(comments)
         return (
             <div className="product" key={singleFish[0].id}>
+                <ScrollToTopOnMount />
                 <Back />
                 <img className="col-sm-8" src={singleFish[0].image} alt={singleFish[0].name} />
                 <div className="col-sm-4">
-                    <h4 className="name">{singleFish[0].name}</h4>
-                    <div className="desc">{singleFish[0].desc}</div>
-                    <div className="price">${singleFish[0].price}</div>
-                    <h5 className="comments-title">Customer Review</h5>
+                    <h4 className="name single">{singleFish[0].name}</h4>
+                    <div className="desc single">{singleFish[0].desc}</div>
+                    <div className="price single">${singleFish[0].price}</div>
+                    <h5 className="comments-title single">Customer Review</h5>
                     <div>{ comments }</div>
                     <form onSubmit={(e) => this.props.onHandleNewComment(e, singleFish[0].code, arrOfOnePostComments.length)}>
                         <input 
