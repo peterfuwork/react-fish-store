@@ -20,8 +20,12 @@ class App extends Component {
       newProductImageLink: "",
       newComment:"",
       isEditButtonClick: false,
+
       editMsg: "",
       editMsgCid: "",
+      editRatingValue: "",
+
+      ratingValue: "",
 
       currentPage: 1,
       fishPerPage: 6
@@ -97,12 +101,13 @@ class App extends Component {
     })
   }
 
-  updateMsg = async (code, cid, text, user, arrIndex) => {
+  updateMsg = async (code, cid, text, user, rating, arrIndex) => {
     var newBody = {
       code,
       cid,
       text,
       user,
+      rating,
       arrIndex
     };
     await fetch('http://localhost:3001/messagePUT/', {
@@ -220,26 +225,29 @@ class App extends Component {
     });
   }
 
-  onHandleNewComment = (e, postCode, specificPostCommentLength) => {
+  onHandleNewComment = (e, postCode, specificPostCommentLength, ratingValue) => {
     e.preventDefault();
-    console.log('postCode',postCode)
+    console.log('ratingValue', ratingValue)
     const comment = { 
       text: this.state.newComment,
-      user: ""
+      user: "",
+      rating: ratingValue
     };
     console.log('comment', comment)
-    this.postMsg(postCode, comment, specificPostCommentLength);
-
+    this.postMsg(postCode, comment, specificPostCommentLength, ratingValue);
     this.setState({
-      newComment: ""
+      newComment: "",
+      ratingValue: ""
     })
+    console.log('ratingValue', this.state.ratingValue);
   }
 
-  onClickEdit = (text, cid) => {
+  onClickEdit = (text, rating, cid) => {
     this.setState({
       isEditButtonClick: true,
       editMsgCid: cid,
-      editMsg: text
+      editMsg: text,
+      editRatingValue: rating
     })
   }
 
@@ -250,9 +258,16 @@ class App extends Component {
     })
   }
 
-  onSaveComment = (e, postCode, cid, newText, user, arrIndex) => {
+  onUpdateSelectRating = (e) => {
     e.preventDefault();
-    this.updateMsg(postCode, cid, newText, user, arrIndex);
+    this.setState({
+      editRatingValue: e.target.value
+    })
+  }
+
+  onSaveComment = (e, postCode, cid, newText, user, rating, arrIndex) => {
+    e.preventDefault();
+    this.updateMsg(postCode, cid, newText, user, rating, arrIndex);
     this.setState({
       isEditButtonClick: false
     })
@@ -267,6 +282,13 @@ class App extends Component {
   onHandleClickPage = (e) => {
     this.setState({
         currentPage: Number(e.target.id)
+    });
+  }
+
+  onHandleSelectRating = (e) => {
+    console.log('efdasfdasfasf',e.target.value);
+    this.setState({
+      ratingValue: Number(e.target.value)
     });
   }
 
@@ -313,13 +335,21 @@ class App extends Component {
                       onHandleNewComment={this.onHandleNewComment}
                       onChangeComment={this.onChangeComment}
                       newComment={this.state.newComment}
-                      onClickEdit={this.onClickEdit}
-                      onUpdateTextareaComment={this.onUpdateTextareaComment}
-                      onSaveComment={this.onSaveComment}
+ 
                       onDeleteComment={this.onDeleteComment}
+
+                      onClickEdit={this.onClickEdit}
+                      onSaveComment={this.onSaveComment}
                       isEditButtonClick={this.state.isEditButtonClick}
+                      onUpdateTextareaComment={this.onUpdateTextareaComment}
+                      onUpdateSelectRating={this.onUpdateSelectRating}
+
                       editMsg={this.state.editMsg}
                       editMsgCid={this.state.editMsgCid}
+                      editRatingValue={this.state.editRatingValue}
+
+                      onHandleSelectRating={this.onHandleSelectRating}
+                      ratingValue={this.state.ratingValue}
                       {...props}
                     />
                   }

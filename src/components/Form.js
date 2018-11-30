@@ -5,6 +5,7 @@ const Form = (props) => {
     //console.log(props)
     return (
         <form className="col-sm-12 form" onSubmit={(e) => props.onHandleSubmit(e)}>
+            <Back />
             <h4>Add a new fish product</h4>
             <input
                 placeholder="name of fish" 
@@ -34,7 +35,6 @@ const Form = (props) => {
                 onChange={(e) => props.onChangeImage(e)}
                 value={props.newProductImageLink} /><br />
             <button className="submit">Submit</button>
-            <Back />
         </form>
     );
 }

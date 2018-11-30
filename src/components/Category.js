@@ -3,9 +3,6 @@ import Fish from './Fish';
 import { Link } from "react-router-dom";
 
 class Category extends Component {
-    constructor(props) {
-        super(props);
-    }
     
     render() {
         console.log('this.props',this.props)
@@ -68,6 +65,7 @@ class Category extends Component {
         const renderPageNumbers = pageNumbers.map(number => {
             return (
                 <span
+                    className={(this.props.currentPage === number ? 'active ' : '')}
                     key={number}
                     id={number}
                     onClick={this.props.onHandleClickPage}

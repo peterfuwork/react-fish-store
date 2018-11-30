@@ -14,7 +14,7 @@ const Filtered = (props) => {
     }
 
     const schoolOfFilteredFish = props.fish.filter(singleFish => {
-        return singleFish.type === props.match.params.type;
+        return singleFish.type.toLowerCase().replace(/\s/g, "") === props.match.params.type;
     });
 
     const schoolOfFish = schoolOfFilteredFish.map(singleFish => {
