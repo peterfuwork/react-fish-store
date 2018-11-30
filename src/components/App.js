@@ -269,8 +269,10 @@ class App extends Component {
     e.preventDefault();
     this.updateMsg(postCode, cid, newText, user, rating, arrIndex);
     this.setState({
-      isEditButtonClick: false
+      isEditButtonClick: false,
+      editRatingValue: ""
     })
+    console.log('editMsg', this.state.editMsg)
     // this.updateMsg(postCode, cid);
   }
 
@@ -293,7 +295,7 @@ class App extends Component {
   }
 
   render() {
-    console.log('comments',this.state.comments)
+    //console.log('comments',this.state.comments)
     return (
       <BrowserRouter>
             <div className="App">

@@ -5,9 +5,9 @@ import ScrollToTopOnMount from './ScrollToTopOnMount';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 class Single extends Component {
-    handleKeyPress = (e, code, cid, text, user, i) => {
+    handleKeyPress = (e, code, cid, text, user, value, i) => {
         if (e.key === 'Enter') {
-            this.props.onSaveComment(e, code, cid, text, user, i);
+            this.props.onSaveComment(e, code, cid, text, user, value, i);
         }
     }
     render() {
@@ -51,7 +51,7 @@ class Single extends Component {
                             cols="25"
                             className="update-textarea"
                             onChange={(e) => this.props.onUpdateTextareaComment(e)}
-                            onKeyPress={(e) => this.handleKeyPress(e, singleFish[0].code, comment.cid, this.props.editMsg, comment.user, i)}
+                            onKeyPress={(e) => this.handleKeyPress(e, singleFish[0].code, comment.cid, this.props.editMsg, comment.user, this.props.editRatingValue, i)}
                             value={this.props.editMsg}/>
                         <legend htmlFor="update-rating-select" className="update-rating-select-title">Rating:</legend>
                         <select
@@ -131,7 +131,7 @@ class Single extends Component {
                             <option value="0.5">0.5</option>
                             <option value="0">0</option>
                         </select>
-                        <button className="submit">Submit</button>
+                        <button className="submit" disabled={ this.props.newComment === "" ? true : false}>Submit</button>
                     </form>
                 </div>
             </div>

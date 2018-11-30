@@ -162,6 +162,7 @@
         text-align:right;
         border:1px solid #ccc;
         padding: 1rem;
+        background-color:#efefef;
         .new-comment {
           color: #000;
           text-decoration: none;
@@ -202,6 +203,14 @@
           &:hover {
             color:#fff;
             background-color:#000;
+          }
+          &:disabled {
+            border: 1px solid #ccc;
+            color:#ccc;
+            &:hover {
+              color:#ccc;
+              background-color:#fff;
+            }
           }
         }
       }
@@ -262,6 +271,9 @@
             &.show {
               display:block;
               color:#999999;
+              background-color:#efefef;
+              padding: 1rem;
+              border: 1px solid #ccc;
             }
             .update-textarea {
               font-size: .8rem;
