@@ -2,9 +2,10 @@ import React, { Component } from 'react';
 import Back from './Back';
 import ScrollToTopOnMount from './ScrollToTopOnMount';
 
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { printResult } from './RatingStars';
 
 class Single extends Component {
+
     handleKeyPress = (e, code, cid, text, user, value, i) => {
         if (e.key === 'Enter') {
             this.props.onSaveComment(e, code, cid, text, user, value, i);
@@ -77,21 +78,13 @@ class Single extends Component {
                             onClick={(e) => this.props.onSaveComment(e, singleFish[0].code, comment.cid, this.props.editMsg, comment.user, this.props.editRatingValue, i)}>(save)</a>
                     </div>
                     <div className="rating">
-                        { 
-                            comment.rating !== "" ? comment.rating !== undefined ? "Rating: " : <span></span> : <span></span>
-                        }
-                        { comment.rating }
-                        {/* <FontAwesomeIcon icon={['fas', 'star']} />
-                        <FontAwesomeIcon icon={['fas', 'star']} />
-                        <FontAwesomeIcon icon={['fas', 'star']} />
-                        <FontAwesomeIcon icon={['fas', 'star-half-alt']} />
-                        <FontAwesomeIcon icon={['far', 'star']} /> */}
+                        { comment.rating !== "" ? comment.rating !== undefined ? <div dangerouslySetInnerHTML={{__html: printResult(comment.rating)}} /> : <span></span> : <span></span> }
                     </div>
                 </div>
             )
         }
     });
-    // console.log(comments)
+    console.log('this.props.editRatingValue',this.props.editRatingValue)
         return (
             <div className="product" key={singleFish[0].id}>
                 <ScrollToTopOnMount />
@@ -105,7 +98,7 @@ class Single extends Component {
                     <div className="price single">${singleFish[0].price}</div>
                     <h5 className="comments-title single">Customer Review</h5>
                     <div className="comments">{ comments }</div>
-                    <form className="leave-message-form" onSubmit={(e) => this.props.onHandleNewComment(e, singleFish[0].code, arrOfOnePostComments.length, this.props.ratingValue)}>
+                    <form className="leave-message-form" onSubmit={(e) => this.props.onHandleNewComment(e, singleFish[0].code, arrOfOnePostComments.length, this.props.selectedRatingValue)}>
                         <textarea 
                             className="new-comment" 
                             type="text" 
@@ -114,7 +107,7 @@ class Single extends Component {
                             onChange={this.props.onChangeComment} />
                         <legend htmlFor="rating-select" className="rating-select-title">Rating:</legend>
                         <select
-                            value = {this.props.ratingValue}
+                            value = {this.props.selectedRatingValue}
                             className="rating-select"
                             onChange={(e) => this.props.onHandleSelectRating(e)} 
                             >

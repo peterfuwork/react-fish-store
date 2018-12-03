@@ -25,7 +25,7 @@ class App extends Component {
       editMsgCid: "",
       editRatingValue: "",
 
-      ratingValue: "",
+      selectedRatingValue: "",
 
       currentPage: 1,
       fishPerPage: 6
@@ -237,9 +237,9 @@ class App extends Component {
     this.postMsg(postCode, comment, specificPostCommentLength, ratingValue);
     this.setState({
       newComment: "",
-      ratingValue: ""
+      selectedRatingValue: ""
     })
-    console.log('ratingValue', this.state.ratingValue);
+    console.log('selectedRatingValue', this.state.selectedRatingValue);
   }
 
   onClickEdit = (text, rating, cid) => {
@@ -267,12 +267,24 @@ class App extends Component {
 
   onSaveComment = (e, postCode, cid, newText, user, rating, arrIndex) => {
     e.preventDefault();
-    this.updateMsg(postCode, cid, newText, user, rating, arrIndex);
-    this.setState({
-      isEditButtonClick: false,
-      editRatingValue: ""
-    })
-    console.log('editMsg', this.state.editMsg)
+    
+    if (rating === "") {
+      // if rating has no content
+      this.updateMsg(postCode, cid, newText, user, rating, arrIndex);
+      this.setState({
+        isEditButtonClick: false,
+        editRatingValue: ""
+      })
+    } else {
+      // if rating has number in string
+      this.updateMsg(postCode, cid, newText, user, Number(rating), arrIndex);
+      this.setState({
+        isEditButtonClick: false,
+        editRatingValue: ""
+      })
+    }
+
+    console.log('editMsg', this.state.editRatingValue)
     // this.updateMsg(postCode, cid);
   }
 
@@ -290,7 +302,7 @@ class App extends Component {
   onHandleSelectRating = (e) => {
     console.log('efdasfdasfasf',e.target.value);
     this.setState({
-      ratingValue: Number(e.target.value)
+      selectedRatingValue: Number(e.target.value)
     });
   }
 
@@ -351,7 +363,7 @@ class App extends Component {
                       editRatingValue={this.state.editRatingValue}
 
                       onHandleSelectRating={this.onHandleSelectRating}
-                      ratingValue={this.state.ratingValue}
+                      selectedRatingValue={this.state.selectedRatingValue}
                       {...props}
                     />
                   }
