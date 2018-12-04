@@ -3,6 +3,7 @@ import Category from './Category';
 import Single from './Single';
 import Filtered from './Filtered';
 import Form from './Form';
+import Demo from './Demo';
 import { BrowserRouter, Route } from "react-router-dom";
 
 class App extends Component {
@@ -45,23 +46,20 @@ class App extends Component {
   }
 
   post = async (name, price, type, desc, image) => {
-    const newBody = {
-      name,
-      price,
-      type,
-      desc,
-      image
-    }
+    const newBody = new FormData();
+    newBody.append('name', name);
+    newBody.append('price', price);
+    newBody.append('type', type);
+    newBody.append('desc', desc);
+    newBody.append('image', image, image.name);
+
     await fetch('http://localhost:3001/fishPOST/', {
-      headers: {
-        'Content-Type': 'application/json',
-        'Accept': 'application/json',
-      },
       method: "POST",
-      body: JSON.stringify(newBody)
+      body: newBody
     })
-    .then(response => response.json())
+    .then((response) => response.json())
     .then((response) => {
+      console.log('response',response);
       this.setState({
         fish: [...this.state.fish, response],
         filteredFish: [...this.state.fish, response]
@@ -196,7 +194,7 @@ class App extends Component {
   }
   onChangeImage = (e) => {
     this.setState({
-      newProductImageLink: e.target.value
+      newProductImageLink: e.target.files[0]
     });
   }
 
@@ -370,7 +368,7 @@ class App extends Component {
                 />
                 <Route exact 
                   path="/form"
-                  render={(props) =>
+                  render={(props) => 
                     <Form
                       onChangeName={this.onChangeName}
                       onChangePrice={this.onChangePrice}
@@ -385,6 +383,13 @@ class App extends Component {
                       onHandleSubmit={this.onHandleSubmit}
                       {...props}
                     />
+                  }
+                />
+
+                <Route exact 
+                  path="/demo"
+                  component={(props) =>
+                    <Demo />
                   }
                 />
                 

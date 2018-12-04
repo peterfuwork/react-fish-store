@@ -29,11 +29,9 @@ const Form = (props) => {
                 type="textarea"
                 onChange={(e) => props.onChangeDesc(e)}
                 value={props.newProductDesc} /><br />
-            <input 
-                placeholder="image link" 
-                type="text"
-                onChange={(e) => props.onChangeImage(e)}
-                value={props.newProductImageLink} /><br />
+            <input
+                type="file"
+                onChange={(e) => props.onChangeImage(e)} /><br />
             <button className="submit">Submit</button>
         </form>
     );
