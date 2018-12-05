@@ -22,7 +22,7 @@ class Single extends Component {
         );
     }
 
-    const singleFish = this.props.fish.filter(single => single.id === Number.parseInt(this.props.match.params.id));
+    const singleFish = this.props.fish.filter(single => single.id === this.props.match.params.id);
     //console.log('singleFish',singleFish[0].code)
 
     const arrOfOnePostComments = this.props.comments[singleFish[0].code] || [];

@@ -1,5 +1,7 @@
 import React from 'react';
 import Back from './Back';
+// import Cropper from 'react-cropper';
+// import 'cropperjs/dist/cropper.css';
 
 const Form = (props) => {
     //console.log(props)
@@ -32,6 +34,13 @@ const Form = (props) => {
             <input
                 type="file"
                 onChange={(e) => props.onChangeImage(e)} /><br />
+            {/* <Cropper
+                style={{ height: 400, width: '100%' }}
+                aspectRatio={16 / 16}
+                preview=".img-preview"
+                src={props.newProductImageLink}
+                ref={cropper => { this.cropper = cropper; }}
+            /> */}
             <button className="submit">Submit</button>
         </form>
     );
