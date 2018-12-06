@@ -10,27 +10,61 @@ const Form = (props) => {
             <Back />
             <h4>Add a new fish product</h4>
             <input
-                placeholder="name of fish" 
+                placeholder="Name of fish" 
                 type="text"
                 onChange={(e) => props.onChangeName(e)}
                 value={props.newProductName} /><br />
             <input
-                placeholder="price" 
+                placeholder="Price" 
                 type="number"
                 onChange={(e) => props.onChangePrice(e)}
                 value={props.newProductPrice} /><br />
             <input 
-                placeholder="type of fish" 
+                placeholder="Type of fish" 
                 type="text"
                 onChange={(e) => props.onChangeType(e)}
                 value={props.newProductType} /><br />
             <textarea
                 cols="50"
                 rows="4"
-                placeholder="desc" 
+                placeholder="Description" 
                 type="textarea"
                 onChange={(e) => props.onChangeDesc(e)}
                 value={props.newProductDesc} /><br />
+
+            <input 
+                placeholder="Care Level"
+                type="text"
+                onChange={(e) => props.onChangeCare(e)}
+                value={props.newProductCare} /><br />
+            <input 
+                placeholder="Temperament" 
+                type="text"
+                onChange={(e) => props.onChangeTemperament(e)}
+                value={props.newProductTemperament} /><br />
+            <input 
+                placeholder="Diet" 
+                type="text"
+                onChange={(e) => props.onChangeDiet(e)}
+                value={props.newProductDiet} /><br />
+            <div>Is it reef safe?</div>
+            <input 
+                className="radio-button" 
+                type="radio" 
+                name="reef-safe"
+                onChange={(e) => props.onChangeReef(e)}
+                value="Yes" /> Yes&nbsp;&nbsp;&nbsp;
+            <input 
+                className="radio-button" 
+                type="radio" 
+                name="reef-safe"
+                onChange={(e) => props.onChangeReef(e)}
+                value="No" /> No&nbsp;&nbsp;&nbsp;<br/>
+            <input 
+                placeholder="Minimum tank size (g)" 
+                type="number"
+                onChange={(e) => props.onChangeTankSize(e)}
+                value={props.newProductTankSize} /><br />
             <input
                 type="file"
                 onChange={(e) => props.onChangeImage(e)} /><br />
