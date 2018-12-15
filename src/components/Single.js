@@ -26,7 +26,7 @@ class Single extends Component {
         return (
             <div className="recommend-item" key={single.id}>
                 <Link to={`/marinefish/id/${single.id}`}>
-                    <img src={single.image} />
+                    <img src={single.image} alt={single.name} />
                 </Link>
             </div>
         )

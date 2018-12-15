@@ -4,6 +4,7 @@ import Single from './Single';
 import Filtered from './Filtered';
 import Form from './Form';
 import Demo from './Demo';
+import SimpleSlider from './SimpleSlider';
 import { BrowserRouter, Route } from "react-router-dom";
 
 class App extends Component {
@@ -430,12 +431,12 @@ class App extends Component {
                   path="/marinefish/id/:id"
                   render={(props) =>
                     <Single 
+                      //{...this.state}
                       fish={this.state.fish}
                       comments={this.state.comments}
                       onHandleNewComment={this.onHandleNewComment}
                       onChangeComment={this.onChangeComment}
                       newComment={this.state.newComment}
- 
                       onDeleteComment={this.onDeleteComment}
 
                       onClickEdit={this.onClickEdit}
@@ -495,6 +496,13 @@ class App extends Component {
                   path="/demo"
                   component={(props) =>
                     <Demo />
+                  }
+                />
+
+                <Route exact 
+                  path="/slider"
+                  component={(props) =>
+                    <SimpleSlider />
                   }
                 />
                 
