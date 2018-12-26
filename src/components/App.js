@@ -355,7 +355,6 @@ class App extends Component {
   }
 
   render() {
-    //console.log('comments',this.state.comments)
     return (
       <BrowserRouter>
             <div className="App">
@@ -366,14 +365,9 @@ class App extends Component {
                   path="/" 
                   component={() => 
                     <Category 
-                      fish={this.state.fish}
-                      filteredFish={this.state.filteredFish}
-                      comments={this.state.comments}
                       onClickFilter={this.onClickFilter}
-
                       onHandleClickPage={this.onHandleClickPage}
-                      currentPage={this.state.currentPage}
-                      fishPerPage={this.state.fishPerPage}
+                      {...this.state}
                     />
                   }
                 />
@@ -382,7 +376,7 @@ class App extends Component {
                   path="/marinefish/type/:type"
                   component={(props) => 
                     <Filtered 
-                      fish={this.state.fish}
+                      {...this.state}
                       {...props}
                     />
                   }
@@ -392,30 +386,19 @@ class App extends Component {
                   path="/marinefish/id/:id"
                   render={(props) =>
                     <Single 
-                      //{...this.state}
-                      fish={this.state.fish}
-                      comments={this.state.comments}
                       onHandleNewComment={this.onHandleNewComment}
                       onChangeComment={this.onChangeComment}
-                      newComment={this.state.newComment}
                       onDeleteComment={this.onDeleteComment}
 
                       onClickEdit={this.onClickEdit}
                       onSaveComment={this.onSaveComment}
-                      isEditButtonClick={this.state.isEditButtonClick}
                       onUpdateTextareaComment={this.onUpdateTextareaComment}
                       onUpdateSelectRating={this.onUpdateSelectRating}
 
-                      editMsg={this.state.editMsg}
-                      editMsgCid={this.state.editMsgCid}
-                      editRatingValue={this.state.editRatingValue}
-
                       onHandleSelectRating={this.onHandleSelectRating}
-                      selectedRatingValue={this.state.selectedRatingValue}
 
                       handleAccordionClick={this.handleAccordionClick}
-                      shown={this.state.shown}
-                      randomFish={this.state.randomFish}
+                      {...this.state}
                       {...props}
                     />
                   }
@@ -429,17 +412,7 @@ class App extends Component {
                       onHandleInput={this.onHandleInput}
                       onHandleSubmit={this.onHandleSubmit}
 
-                      newProductName={this.state.newProductName}
-                      newProductPrice={this.state.newProductPrice}
-                      newProductType={this.state.newProductType}
-                      newProductDesc={this.state.newProductDesc}
-                      newProductImageLink={this.state.newProductImageLink}
-                      newProductDiet={this.state.newProductDiet}
-                      newProductCare={this.state.newProductCare}
-                      newProductTemperament={this.state.newProductTemperament}
-                      newProductTankSize={this.state.newProductTankSize}
-                      newProductReef={this.state.newProductReef}
-
+                      {...this.state}
                       {...props}
                     />
                   }
