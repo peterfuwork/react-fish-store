@@ -12,59 +12,67 @@ const Form = (props) => {
             <input
                 placeholder="Name of fish" 
                 type="text"
-                onChange={(e) => props.onChangeName(e)}
-                value={props.newProductName} /><br />
+                onChange={(e) => props.onHandleInput(e)}
+                value={props.newProductName}
+                name="newProductName" /><br />
             <input
                 placeholder="Price" 
                 type="number"
-                onChange={(e) => props.onChangePrice(e)}
-                value={props.newProductPrice} /><br />
+                onChange={(e) => props.onHandleInput(e)}
+                value={props.newProductPrice}
+                name="newProductPrice" /><br />
             <input 
                 placeholder="Type of fish" 
                 type="text"
-                onChange={(e) => props.onChangeType(e)}
-                value={props.newProductType} /><br />
+                onChange={(e) => props.onHandleInput(e)}
+                value={props.newProductType}
+                name="newProductType" /><br />
             <textarea
                 cols="50"
                 rows="4"
                 placeholder="Description" 
                 type="textarea"
-                onChange={(e) => props.onChangeDesc(e)}
-                value={props.newProductDesc} /><br />
+                onChange={(e) => props.onHandleInput(e)}
+                value={props.newProductDesc}
+                name="newProductDesc" /><br />
 
             <input 
                 placeholder="Care Level"
                 type="text"
-                onChange={(e) => props.onChangeCare(e)}
-                value={props.newProductCare} /><br />
+                onChange={(e) => props.onHandleInput(e)}
+                value={props.newProductCare}
+                name="newProductCare" /><br />
             <input 
                 placeholder="Temperament" 
                 type="text"
-                onChange={(e) => props.onChangeTemperament(e)}
-                value={props.newProductTemperament} /><br />
+                onChange={(e) => props.onHandleInput(e)}
+                value={props.newProductTemperament}
+                name="newProductTemperament" /><br />
             <input 
                 placeholder="Diet" 
                 type="text"
-                onChange={(e) => props.onChangeDiet(e)}
-                value={props.newProductDiet} /><br />
+                onChange={(e) => props.onHandleInput(e)}
+                value={props.newProductDiet}
+                name="newProductDiet" /><br />
             <div>Is it reef safe?</div>
             <input 
                 className="radio-button" 
                 type="radio" 
-                name="reef-safe"
+                name="newProductReef"
                 onChange={(e) => props.onChangeReef(e)}
                 value="Yes" /> Yes&nbsp;&nbsp;&nbsp;
             <input 
                 className="radio-button" 
                 type="radio" 
-                name="reef-safe"
+                name="newProductReef"
                 onChange={(e) => props.onChangeReef(e)}
                 value="No" /> No&nbsp;&nbsp;&nbsp;<br/>
             <input 
                 placeholder="Minimum tank size (g)" 
                 type="number"
-                onChange={(e) => props.onChangeTankSize(e)}
-                value={props.newProductTankSize} /><br />
+                onChange={(e) => props.onHandleInput(e)}
+                value={props.newProductTankSize}
+                name="newProductTankSize" /><br />
             <input
                 type="file"
                 onChange={(e) => props.onChangeImage(e)} /><br />

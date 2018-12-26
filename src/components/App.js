@@ -199,49 +199,15 @@ class App extends Component {
     }
   }
 
-  onChangeName = (e) => {
+  onHandleInput = (e) => {
+    const { value, name } = e.target;
     this.setState({
-      newProductName: e.target.value
-    });
-  }
-  onChangePrice = (e) => {
-    this.setState({
-      newProductPrice: Number(e.target.value)
-    });
-  }
-  onChangeType = (e) => {
-    console.log('e',e.target.value)
-    this.setState({
-      newProductType: e.target.value
-    });
-  }
-  onChangeDesc = (e) => {
-    console.log('e',e.target.value)
-    this.setState({
-      newProductDesc: e.target.value
-    });
+      [name]: value
+    })
   }
   onChangeImage = (e) => {
     this.setState({
       newProductImageLink: e.target.files[0]
-    });
-  }
-  onChangeCare = (e) => {
-    console.log('e',e.target.value)
-    this.setState({
-      newProductCare: e.target.value
-    });
-  }
-  onChangeTemperament = (e) => {
-    console.log('e',e.target.value)
-    this.setState({
-      newProductTemperament: e.target.value
-    });
-  }
-  onChangeDiet = (e) => {
-    console.log('e',e.target.value)
-    this.setState({
-      newProductDiet: e.target.value
     });
   }
   onChangeReef = (e) => {
@@ -259,11 +225,6 @@ class App extends Component {
         newProductReef: null
       });
     }
-  }
-  onChangeTankSize = (e) => {
-    this.setState({
-      newProductTankSize: Number(e.target.value)
-    });
   }
 
   onHandleSubmit = (e) => {
@@ -463,16 +424,10 @@ class App extends Component {
                   path="/form"
                   render={(props) => 
                     <Form
-                      onChangeName={this.onChangeName}
-                      onChangePrice={this.onChangePrice}
-                      onChangeType={this.onChangeType}
-                      onChangeDesc={this.onChangeDesc}
                       onChangeImage={this.onChangeImage}
-                      onChangeCare={this.onChangeCare}
-                      onChangeTemperament={this.onChangeTemperament}
-                      onChangeDiet={this.onChangeDiet}
-                      onChangeTankSize={this.onChangeTankSize}
                       onChangeReef={this.onChangeReef}
+                      onHandleInput={this.onHandleInput}
+                      onHandleSubmit={this.onHandleSubmit}
 
                       newProductName={this.state.newProductName}
                       newProductPrice={this.state.newProductPrice}
@@ -484,8 +439,6 @@ class App extends Component {
                       newProductTemperament={this.state.newProductTemperament}
                       newProductTankSize={this.state.newProductTankSize}
                       newProductReef={this.state.newProductReef}
-
-                      onHandleSubmit={this.onHandleSubmit}
 
                       {...props}
                     />
