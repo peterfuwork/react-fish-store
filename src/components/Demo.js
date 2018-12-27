@@ -31,7 +31,6 @@ class Demo extends Component {
     reader.onload = () => {
       this.setState({ src: reader.result });
     };
-    console.log('reader',reader)
     reader.readAsDataURL(files[0]);
   }
 

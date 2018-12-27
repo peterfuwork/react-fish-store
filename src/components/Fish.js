@@ -3,7 +3,6 @@ import React from 'react';
 import { Link } from "react-router-dom";
 
 const Fish = (props) => {
-    // console.log('fish', props)
     return (
         <div className="col-sm-4 product">
             <Link to={`/marinefish/id/${props.id}`}>
