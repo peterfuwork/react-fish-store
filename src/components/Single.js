@@ -11,9 +11,9 @@ import { printResult } from './RatingStars';
 
 class Single extends Component {
 
-    handleKeyPress = (event, code, cid, text, user, value, i) => {
+    handleKeyPress = (event, fid, cid, text, uid, value) => {
         if (event.key === 'Enter') {
-            this.props.updateComment(code, cid, text, user, value, i);
+            this.props.updateComment(fid, cid, text, uid, value);
         }
     }
 
@@ -44,7 +44,7 @@ class Single extends Component {
 
     const singleFish = fish.filter(single => single.id === match.params.id);
 
-    const arrOfOnePostComments = comments[singleFish[0].code] || [];
+    const arrOfOnePostComments = comments.filter(comment => comment.fid === singleFish[0].id) || [];
 
     const allComments = arrOfOnePostComments.map((comment, i) => {
         if(i < -1 || undefined) {
@@ -54,8 +54,8 @@ class Single extends Component {
                 <div className="comment" key={comment.cid}>
                     <div className="user">
                         <a className="delete-btn"
-                        onClick={() => this.props.deleteComment(singleFish[0].code, comment.cid)}>X</a>&nbsp;
-                        { comment.user }:&nbsp;
+                        onClick={() => this.props.deleteComment(singleFish[0].id, comment.cid)}>X</a>&nbsp;
+                        { comment.uid }:&nbsp;
                         <span className={`text ${isEditButtonClick && editMsgCid === comment.cid ? "" : "show"}`}>
                             { comment.text }
                             <a  
@@ -70,7 +70,7 @@ class Single extends Component {
                             name="text"
                             className="update-textarea"
                             onChange={(event) => this.props.changeMsg(event)}
-                            onKeyPress={(event) => this.handleKeyPress(event, singleFish[0].code, comment.cid, editMsg, comment.user, editRatingValue, i)}
+                            onKeyPress={(event) => this.handleKeyPress(event, singleFish[0].id, comment.cid, editMsg, comment.uid, editRatingValue, i)}
                             value={editMsg}/>
                         <legend htmlFor="update-rating-select" className="update-rating-select-title">Rating:</legend>
                         <select
@@ -78,7 +78,7 @@ class Single extends Component {
                             value={editRatingValue}
                             className="update-rating-select"
                             onChange={(event) => this.props.changeRating(event)}
-                            onKeyPress={(event) => this.handleKeyPress(event, singleFish[0].code, comment.cid, editMsg, comment.user, editRatingValue, i)}
+                            onKeyPress={(event) => this.handleKeyPress(event, singleFish[0].id, comment.cid, editMsg, comment.uid, editRatingValue, i)}
                             >
                             <option value="">No Option</option>
                             <option value="5">5</option>
@@ -95,7 +95,7 @@ class Single extends Component {
                         </select>
                         <a  
                             className="save-btn"
-                            onClick={(e) => this.props.updateComment(singleFish[0].code, comment.cid, editMsg, comment.user, editRatingValue, i)}>(save)</a>
+                            onClick={(e) => this.props.updateComment(singleFish[0].id, comment.cid, editMsg, comment.uid, editRatingValue)}>(save)</a>
                     </form>
                     <div className="rating">
                         { comment.rating !== "" ? comment.rating !== undefined ? <div dangerouslySetInnerHTML={{__html: printResult(comment.rating)}} /> : <span></span> : <span></span> }
@@ -143,7 +143,7 @@ class Single extends Component {
                     </div>
                     <h5 className="comments-title single">Customer Review</h5>
                     <div className="comments">{ allComments }</div>
-                    <form className="leave-message-form" onSubmit={this.props.handleSubmit(formProps => this.onSubmitAdd(formProps, singleFish[0].code))} >
+                    <form className="leave-message-form" onSubmit={this.props.handleSubmit(formProps => this.onSubmitAdd(formProps, singleFish[0].id))} >
                         <fieldset>
                             <Field
                                 className="new-comment"

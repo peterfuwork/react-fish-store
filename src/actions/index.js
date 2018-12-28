@@ -87,7 +87,7 @@ export const fetchComments = () => async dispatch => {
     });
 }
 
-export const addComment = (formProps, fishPostCode) => async dispatch => {
+export const addComment = (formProps, fid) => async dispatch => {
 
     if(formProps.rating === undefined){
         formProps.rating = "";
@@ -96,12 +96,10 @@ export const addComment = (formProps, fishPostCode) => async dispatch => {
     }
     
     const newBody = {
-        code: fishPostCode,
-        comment: {
-            text: formProps.text,
-            user: "",
-            rating: formProps.rating
-        }
+        fid,
+        text: formProps.text,
+        uid: "",
+        rating: formProps.rating
     };
     const response = await fetch('http://localhost:3001/messagePOST/', {
       headers: {
@@ -111,19 +109,18 @@ export const addComment = (formProps, fishPostCode) => async dispatch => {
       method: "POST",
       body: JSON.stringify(newBody)
     });
-    const newPost = await response.json();
+    const newComment = await response.json();
     dispatch({
         type: ADD_COMMENT,
-        payload: newPost,
-        fishPostCode
+        payload: newComment
     });
     dispatch(reset('addcomment'));
 }
 
-export const deleteComment = (fishPostCode, deleteCommentcode) => async dispatch => {
+export const deleteComment = (fid, cid) => async dispatch => {
     const newBody = {
-        code: fishPostCode,
-        cid: deleteCommentcode
+        fid,
+        cid
     };
     const response = await fetch('http://localhost:3001/messageDELETE/', {
       headers: {
@@ -133,11 +130,10 @@ export const deleteComment = (fishPostCode, deleteCommentcode) => async dispatch
       method: "DELETE",
       body: JSON.stringify(newBody)
     });
-    const newPost = await response.json();
+    const allNewComments = await response.json();
     dispatch({
         type: DELETE_COMMENT,
-        payload: newPost,
-        fishPostCode
+        payload: allNewComments
     });
 }
 
@@ -167,17 +163,17 @@ export const changeRating = (event) => dispatch => {
     });
 }
 
-export const updateComment = (fishPostCode, updateCommentcode, text, user, rating, updateCommentArrIndex) => async dispatch => {
+export const updateComment = (fid, cid, text, uid, rating, updateCommentArrIndex) => async dispatch => {
     if(rating === ""){
         rating = "";
     } else {
         rating = Number(rating)
     }
     const newBody = {
-        code: fishPostCode,
-        cid: updateCommentcode,
+        fid,
+        cid,
         text,
-        user,
+        uid,
         rating,
         arrIndex: updateCommentArrIndex
     };
@@ -189,11 +185,10 @@ export const updateComment = (fishPostCode, updateCommentcode, text, user, ratin
       method: "PUT",
       body: JSON.stringify(newBody)
     });
-    const newPost = await response.json();
+    const allNewComments = await response.json();
     dispatch({
         type: UPDATE_COMMENT,
-        payload: newPost,
-        fishPostCode
+        payload: allNewComments
     });
 }
 

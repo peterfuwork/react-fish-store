@@ -26,18 +26,17 @@ export default function(state = initialState, action) {
         case ADD_COMMENT:
             return {
                 ...state,
-                comments: {
+                comments: [
                     ...state.comments,
-                    [action.fishPostCode]: action.payload
-                }
+                    action.payload
+                ]
             };
         case DELETE_COMMENT:
             return {
                 ...state,
-                comments: {
-                    ...state.comments,
-                    [action.fishPostCode]: action.payload
-                }
+                comments: [
+                    ...action.payload
+                ]
             };
         case CLICK_EDIT:
             return {
@@ -61,10 +60,9 @@ export default function(state = initialState, action) {
             return {
                 ...state,
                 isEditButtonClick: !state.isEditButtonClick,
-                comments: {
-                    ...state.comments,
-                    [action.fishPostCode]: action.payload
-                }
+                comments: [
+                    ...action.payload
+                ]
             };
         default:
             return state;
