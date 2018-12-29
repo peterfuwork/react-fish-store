@@ -87,7 +87,7 @@ export const fetchComments = () => async dispatch => {
     });
 }
 
-export const addComment = (formProps, fid) => async dispatch => {
+export const addComment = (formProps, fid, uid) => async dispatch => {
 
     if(formProps.rating === undefined){
         formProps.rating = "";
@@ -98,7 +98,7 @@ export const addComment = (formProps, fid) => async dispatch => {
     const newBody = {
         fid,
         text: formProps.text,
-        uid: "",
+        uid,
         rating: formProps.rating
     };
     const response = await fetch('http://localhost:3001/messagePOST/', {
@@ -138,11 +138,16 @@ export const deleteComment = (fid, cid) => async dispatch => {
 }
 
 export const clickEdit = (editText, editRating, editId) => dispatch => {
+    if(editRating === null) {
+        editRating = "";
+    }
+    
     const editComment = {
         editText,
         editRating,
         editId
     };
+    
     dispatch({
         type: CLICK_EDIT,
         payload: editComment
@@ -163,9 +168,9 @@ export const changeRating = (event) => dispatch => {
     });
 }
 
-export const updateComment = (fid, cid, text, uid, rating, updateCommentArrIndex) => async dispatch => {
+export const updateComment = (fid, cid, text, uid, rating) => async dispatch => {
     if(rating === ""){
-        rating = "";
+        rating = null;
     } else {
         rating = Number(rating)
     }
@@ -174,8 +179,7 @@ export const updateComment = (fid, cid, text, uid, rating, updateCommentArrIndex
         cid,
         text,
         uid,
-        rating,
-        arrIndex: updateCommentArrIndex
+        rating
     };
     const response = await fetch('http://localhost:3001/messagePUT/', {
       headers: {

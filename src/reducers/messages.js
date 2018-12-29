@@ -6,14 +6,14 @@ import {
     CHANGE_MSG,
     CHANGE_RATING,
     UPDATE_COMMENT
-} from '../actions/types';
+} from "../actions/types";
 
 const initialState = {
     comments: [],
     isEditButtonClick: false,
-    editMsgCid: '',
-    editMsg: '',
-    editRatingValue: '',
+    editMsgCid: "",
+    editMsg: "",
+    editRatingValue: "",
 }
 
 export default function(state = initialState, action) {
