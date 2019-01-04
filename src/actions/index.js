@@ -30,7 +30,7 @@ export const addFish = (formProps, callback) => async dispatch => {
     newBody.append('reef_safe', formProps.reef_safe);
     newBody.append('minimum_tank_size', formProps.minimum_tank_size);
 
-    const response = await fetch('http://fish-store.surge.sh/fishPOST/', {
+    const response = await fetch('https://react-fish-store.herokuapp.com/fishPOST/', {
         method: "POST",
         body: newBody
     });
@@ -43,7 +43,7 @@ export const addFish = (formProps, callback) => async dispatch => {
 };
 
 export const fetchFish = () => async dispatch => {
-    const response = await fetch('http://fish-store.surge.sh/fish/');
+    const response = await fetch('https://react-fish-store.herokuapp.com/fish/');
     const fish = await response.json();
     dispatch({
         type: FETCH_FISH,
@@ -81,7 +81,7 @@ export const clickAccordion = (panelNumber) => async dispatch => {
 }
 
 export const fetchComments = () => async dispatch => {
-    const response = await fetch('http://fish-store.surge.sh/comments/');
+    const response = await fetch('https://react-fish-store.herokuapp.com/comments/');
     const comments = await response.json();
     dispatch({
         type: FETCH_COMMENTS,
@@ -103,7 +103,7 @@ export const addComment = (formProps, fid, uid) => async dispatch => {
         uid,
         rating: formProps.rating
     };
-    const response = await fetch('http://fish-store.surge.sh/messagePOST/', {
+    const response = await fetch('https://react-fish-store.herokuapp.com/messagePOST/', {
       headers: {
         'Content-Type': 'application/json',
         'Accept': 'application/json'
@@ -124,7 +124,7 @@ export const deleteComment = (fid, cid) => async dispatch => {
         fid,
         cid
     };
-    const response = await fetch('http://fish-store.surge.sh/messageDELETE/', {
+    const response = await fetch('https://react-fish-store.herokuapp.com/messageDELETE/', {
       headers: {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
@@ -183,7 +183,7 @@ export const updateComment = (fid, cid, text, uid, rating) => async dispatch => 
         uid,
         rating
     };
-    const response = await fetch('http://fish-store.surge.sh/messagePUT/', {
+    const response = await fetch('https://react-fish-store.herokuapp.com/messagePUT/', {
       headers: {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
@@ -199,7 +199,7 @@ export const updateComment = (fid, cid, text, uid, rating) => async dispatch => 
 }
 
 export const createRandomFish = () => async dispatch => {
-    const response = await fetch('http://fish-store.surge.sh/fish/');
+    const response = await fetch('https://react-fish-store.herokuapp.com/fish/');
     const products = await response.json();
 
     const values = Object.values(products.fish);
@@ -218,7 +218,7 @@ export const login = (formProps, callback) => async dispatch => {
         username: formProps.username,
         password: formProps.password
     };
-    const response = await fetch('http://fish-store.surge.sh/login/', {
+    const response = await fetch('https://react-fish-store.herokuapp.com/login/', {
       headers: {
         'Content-Type': 'application/json',
         'Accept': 'application/json'
