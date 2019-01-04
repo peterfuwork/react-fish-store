@@ -11,3 +11,5 @@ export const CHANGE_MSG = 'change_msg';
 export const CHANGE_RATING = 'change_rating';
 export const UPDATE_COMMENT = 'update_comment';
 export const CREATE_RANDOMFISH = 'create_randomfish';
+export const LOGIN = 'login';
+export const LOGINERROR = 'login_error';

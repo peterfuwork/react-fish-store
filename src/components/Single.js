@@ -23,7 +23,7 @@ class Single extends Component {
 
     render() {
         
-    const { fish, comments, match, shownAccordion, isEditButtonClick, editMsgCid, editMsg, editRatingValue, randomFish} = this.props;
+    const { fish, comments, match, shownAccordion, isEditButtonClick, editMsgCid, editMsg, editRatingValue, randomFish, currentUser} = this.props;
     if(fish.length === 0 || comments.length === 0) {
         return (
             <div>
@@ -143,7 +143,7 @@ class Single extends Component {
                     </div>
                     <h5 className="comments-title single">Customer Review</h5>
                     <div className="comments">{ allComments }</div>
-                    <form className="leave-message-form" onSubmit={this.props.handleSubmit(formProps => this.onSubmitAdd(formProps, singleFish[0].id, 12))} >
+                    <form className="leave-message-form" onSubmit={this.props.handleSubmit(formProps => this.onSubmitAdd(formProps, singleFish[0].id, currentUser.id))} >
                         <fieldset>
                             <Field
                                 className="new-comment"
@@ -188,7 +188,8 @@ function mapStateToProps(state) {
         editMsgCid: state.messages.editMsgCid,
         editMsg: state.messages.editMsg,
         editRatingValue: state.messages.editRatingValue,
-        randomFish: state.products.randomFish
+        randomFish: state.products.randomFish,
+        currentUser: state.users.currentUser
     };
 }
 

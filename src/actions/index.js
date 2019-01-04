@@ -12,7 +12,9 @@ import {
         CHANGE_MSG,
         CHANGE_RATING,
         UPDATE_COMMENT,
-        CREATE_RANDOMFISH
+        CREATE_RANDOMFISH,
+        LOGIN,
+        LOGINERROR
 } from './types';
 
 export const addFish = (formProps, callback) => async dispatch => {
@@ -28,7 +30,7 @@ export const addFish = (formProps, callback) => async dispatch => {
     newBody.append('reef_safe', formProps.reef_safe);
     newBody.append('minimum_tank_size', formProps.minimum_tank_size);
 
-    const response = await fetch('https://react-fish-store.herokuapp.com/fishPOST/', {
+    const response = await fetch('http://localhost:3001/fishPOST/', {
         method: "POST",
         body: newBody
     });
@@ -41,7 +43,7 @@ export const addFish = (formProps, callback) => async dispatch => {
 };
 
 export const fetchFish = () => async dispatch => {
-    const response = await fetch('https://react-fish-store.herokuapp.com/fish/');
+    const response = await fetch('http://localhost:3001/fish/');
     const fish = await response.json();
     dispatch({
         type: FETCH_FISH,
@@ -79,7 +81,7 @@ export const clickAccordion = (panelNumber) => async dispatch => {
 }
 
 export const fetchComments = () => async dispatch => {
-    const response = await fetch('https://react-fish-store.herokuapp.com/comments/');
+    const response = await fetch('http://localhost:3001/comments/');
     const comments = await response.json();
     dispatch({
         type: FETCH_COMMENTS,
@@ -101,7 +103,7 @@ export const addComment = (formProps, fid, uid) => async dispatch => {
         uid,
         rating: formProps.rating
     };
-    const response = await fetch('https://react-fish-store.herokuapp.com/messagePOST/', {
+    const response = await fetch('http://localhost:3001/messagePOST/', {
       headers: {
         'Content-Type': 'application/json',
         'Accept': 'application/json'
@@ -122,7 +124,7 @@ export const deleteComment = (fid, cid) => async dispatch => {
         fid,
         cid
     };
-    const response = await fetch('https://react-fish-store.herokuapp.com/messageDELETE/', {
+    const response = await fetch('http://localhost:3001/messageDELETE/', {
       headers: {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
@@ -181,7 +183,7 @@ export const updateComment = (fid, cid, text, uid, rating) => async dispatch => 
         uid,
         rating
     };
-    const response = await fetch('https://react-fish-store.herokuapp.com/messagePUT/', {
+    const response = await fetch('http://localhost:3001/messagePUT/', {
       headers: {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
@@ -197,7 +199,7 @@ export const updateComment = (fid, cid, text, uid, rating) => async dispatch => 
 }
 
 export const createRandomFish = () => async dispatch => {
-    const response = await fetch('https://react-fish-store.herokuapp.com/fish/');
+    const response = await fetch('http://localhost:3001/fish/');
     const products = await response.json();
 
     const values = Object.values(products.fish);
@@ -209,4 +211,33 @@ export const createRandomFish = () => async dispatch => {
         type: CREATE_RANDOMFISH,
         payload: [randomValue, randomValue2, randomValue3]
     });
+}
+
+export const login = (formProps, callback) => async dispatch => {
+    const newBody = {
+        username: formProps.username,
+        password: formProps.password
+    };
+    const response = await fetch('http://localhost:3001/login/', {
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      },
+      method: "POST",
+      body: JSON.stringify(newBody)
+    });
+    const user = await response.json();
+    if(user.id === undefined) {
+        dispatch({
+            type: LOGINERROR,
+            payload: user
+        });
+    } else {
+        dispatch({
+            type: LOGIN,
+            payload: user
+        });
+        callback();
+    }
+    
 }
