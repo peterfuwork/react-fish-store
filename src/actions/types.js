@@ -13,3 +13,4 @@ export const UPDATE_COMMENT = 'update_comment';
 export const CREATE_RANDOMFISH = 'create_randomfish';
 export const LOGIN = 'login';
 export const LOGINERROR = 'login_error';
+export const SIGNUP = 'signup';

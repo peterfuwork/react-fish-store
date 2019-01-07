@@ -70,6 +70,7 @@ class Category extends Component {
                     <Link className="link" to="marinefish/type/tang">tang</Link>
                     <Link className="link" to="/form">Add a new fish product</Link>
                     <Link className="link" to="/login">Login</Link>
+                    <Link className="link" to="/signup">Signup</Link>
                 </div>
                 { renderFish }
                 <div className="col-sm-12 pagination">

@@ -14,7 +14,8 @@ import {
         UPDATE_COMMENT,
         CREATE_RANDOMFISH,
         LOGIN,
-        LOGINERROR
+        LOGINERROR,
+        SIGNUP,
 } from './types';
 
 export const addFish = (formProps, callback) => async dispatch => {
@@ -30,7 +31,7 @@ export const addFish = (formProps, callback) => async dispatch => {
     newBody.append('reef_safe', formProps.reef_safe);
     newBody.append('minimum_tank_size', formProps.minimum_tank_size);
 
-    const response = await fetch('https://react-fish-store.herokuapp.com/fishPOST/', {
+    const response = await fetch('http://localhost:3001/fishPOST/', {
         method: "POST",
         body: newBody
     });
@@ -43,7 +44,7 @@ export const addFish = (formProps, callback) => async dispatch => {
 };
 
 export const fetchFish = () => async dispatch => {
-    const response = await fetch('https://react-fish-store.herokuapp.com/fish/');
+    const response = await fetch('http://localhost:3001/fish/');
     const fish = await response.json();
     dispatch({
         type: FETCH_FISH,
@@ -81,7 +82,7 @@ export const clickAccordion = (panelNumber) => async dispatch => {
 }
 
 export const fetchComments = () => async dispatch => {
-    const response = await fetch('https://react-fish-store.herokuapp.com/comments/');
+    const response = await fetch('http://localhost:3001/comments/');
     const comments = await response.json();
     dispatch({
         type: FETCH_COMMENTS,
@@ -103,7 +104,7 @@ export const addComment = (formProps, fid, uid) => async dispatch => {
         uid,
         rating: formProps.rating
     };
-    const response = await fetch('https://react-fish-store.herokuapp.com/messagePOST/', {
+    const response = await fetch('http://localhost:3001/messagePOST/', {
       headers: {
         'Content-Type': 'application/json',
         'Accept': 'application/json'
@@ -124,7 +125,7 @@ export const deleteComment = (fid, cid) => async dispatch => {
         fid,
         cid
     };
-    const response = await fetch('https://react-fish-store.herokuapp.com/messageDELETE/', {
+    const response = await fetch('http://localhost:3001/messageDELETE/', {
       headers: {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
@@ -183,7 +184,7 @@ export const updateComment = (fid, cid, text, uid, rating) => async dispatch => 
         uid,
         rating
     };
-    const response = await fetch('https://react-fish-store.herokuapp.com/messagePUT/', {
+    const response = await fetch('http://localhost:3001/messagePUT/', {
       headers: {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
@@ -199,7 +200,7 @@ export const updateComment = (fid, cid, text, uid, rating) => async dispatch => 
 }
 
 export const createRandomFish = () => async dispatch => {
-    const response = await fetch('https://react-fish-store.herokuapp.com/fish/');
+    const response = await fetch('http://localhost:3001/fish/');
     const products = await response.json();
 
     const values = Object.values(products.fish);
@@ -218,7 +219,7 @@ export const login = (formProps, callback) => async dispatch => {
         username: formProps.username,
         password: formProps.password
     };
-    const response = await fetch('https://react-fish-store.herokuapp.com/login/', {
+    const response = await fetch('http://localhost:3001/login/', {
       headers: {
         'Content-Type': 'application/json',
         'Accept': 'application/json'
@@ -239,5 +240,29 @@ export const login = (formProps, callback) => async dispatch => {
         });
         callback();
     }
-    
+}
+
+export const signup = (formProps, callback) => async dispatch => {
+    const newBody = {
+        first_name: formProps.first_name,
+        last_name: formProps.last_name,
+        birth_year: Number(formProps.birth_year),
+        email: formProps.email,
+        username: formProps.username,
+        password: formProps.password
+    };
+    const response = await fetch('http://localhost:3001/signup/', {
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      },
+      method: "POST",
+      body: JSON.stringify(newBody)
+    });
+    const user = await response.json();
+    dispatch({
+        type: SIGNUP,
+        payload: user
+    });
+    callback();
 }

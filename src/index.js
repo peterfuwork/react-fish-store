@@ -13,6 +13,7 @@ import Single from './components/Single';
 import Filtered from './components/Filtered';
 import Form from './components/Form';
 import Login from './components/Login';
+import Signup from './components/Signup';
 import Demo from './components/Demo';
 import SimpleSlider from './components/SimpleSlider';
 
@@ -46,6 +47,7 @@ ReactDOM.render(
                 <Route exact path="/marinefish/id/:id" render={(props) => <Single {...props} />} />
                 <Route exact path="/form" render={(props) => <Form {...props} />} />
                 <Route exact path="/login" render={(props) => <Login {...props} />} />
+                <Route exact path="/signup" render={(props) => <Signup {...props} />} />
                 <Route exact path="/demo" component={(props) => <Demo />} />
                 <Route exact path="/slider" component={(props) => <SimpleSlider />} />
             </App>
